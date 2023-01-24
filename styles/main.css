@@ -1,0 +1,90 @@
+body {
+    font-family: Helvetica;
+    margin: 0;
+    background-color: #f2f2f2;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/*
+Header and Navigation Styling 
+ */
+ 
+.site-header {
+    border-bottom: 1px solid white;
+    padding: .5em 1em;
+    background-color: #333;
+    color: #f2f2f2
+}
+
+.site-header a {
+    color: #f2f2f2;
+}
+
+.site-header::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.site-identity {
+    float: left;
+}
+
+.site-identity h1 {
+    font-size: 1.5em;
+    margin: .7em 0 .3em 0;
+    display: inline-block;
+}
+
+.site-identity img {
+    max-width: 55px;
+    float: left;
+    margin: 5px 10px 0 0;
+}
+
+.user-navigation {
+    float: right;
+    display: block;
+}
+
+.user-navigation ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+.user-navigation li {
+    display: inline-block;
+    margin: 1.4em 1em 1em 1em;
+}
+
+.user-navigation a:hover {
+    color: #333;
+    background-color: #f2f2f2;
+}
+
+.site-navigation {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    background-color: #333;
+    width: 100%;
+}
+
+.site-navigation ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+.site-navigation li {
+    display: inline-block;
+    margin: .4em 1em .4em 1em;
+}
+
+.site-navigation a:hover {
+    color: #333;
+    background-color: #f2f2f2;
+}
