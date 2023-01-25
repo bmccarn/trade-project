@@ -118,7 +118,7 @@ footer li, footer p {
 Main Style
 */
 
-h1 {
+h1, h2 {
     text-align: center;
 }
 
@@ -179,3 +179,22 @@ body {
         margin-bottom: 20px;
     }
 }
+
+/*
+Styling for Trade
+*/
+
+.trade-item {
+    margin: 5em;
+}
+
+.trade-item img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*
+Styling for New Trade
+*/
+
