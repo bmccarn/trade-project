@@ -10,14 +10,14 @@ a {
 }
 
 /*
-Header and Navigation Styling 
+Header and User Navigation Styling 
  */
- 
+
 .site-header {
     border-bottom: 1px solid white;
     padding: .5em 1em;
     background-color: #333;
-    color: #f2f2f2
+    color: #f2f2f2;
 }
 
 .site-header a {
@@ -66,12 +66,17 @@ Header and Navigation Styling
     background-color: #f2f2f2;
 }
 
+/*
+Site-Specific Navigation Styles
+*/
+
 .site-navigation {
     float: left;
     display: block;
     color: #f2f2f2;
     background-color: #333;
     width: 100%;
+    padding-left: 1.5em;
 }
 
 .site-navigation ul, li {
@@ -81,10 +86,43 @@ Header and Navigation Styling
 
 .site-navigation li {
     display: inline-block;
-    margin: .4em 1em .4em 1em;
+    margin: .7em 1em;
 }
 
 .site-navigation a:hover {
     color: #333;
     background-color: #f2f2f2;
 }
+
+/*
+Footer Navigation Styles
+ */
+
+footer {
+    background-color: #333;
+    color: #f2f2f2;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+
+footer li, footer p {
+    display: inline-block;
+    margin: .4em 1em;
+}
+
+/*
+Main Style
+*/
+
+h1 {
+    text-align: center;
+}
+
+main {
+    margin: 0;
+    padding: 5px;
+}
+
