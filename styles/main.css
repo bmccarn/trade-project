@@ -21,47 +21,56 @@ Header and User Navigation Styling
     color: #f2f2f2;
 }
 
+/* Set the text color for all links within the header */
 .site-header a {
     color: #f2f2f2;
 }
 
+/* Clear any floating elements within the header */
 .site-header::after {
     content: "";
     display: table;
     clear: both;
 }
 
+/* Float the site identity to the left */
 .site-identity {
     float: left;
 }
 
+/* Style the site identity title */
 .site-identity h1 {
     font-size: 1.5em;
     margin: .7em 0 .3em 0;
     display: inline-block;
 }
 
+/* Style the site identity image */
 .site-identity img {
     max-width: 55px;
     float: left;
     margin: 5px 10px 0 0;
 }
 
+/* Float the user navigation to the right */
 .user-navigation {
     float: right;
     display: block;
 }
 
+/* Remove the default margins and padding for the user navigation list */
 .user-navigation ul, li {
     margin: 0;
     padding: 0;
 }
 
+/* Display the user navigation list items as inline blocks */
 .user-navigation li {
     display: inline-block;
     margin: 1.4em 1em 1em 1em;
 }
 
+/* Change the text color and background color when hovering over a user navigation link */
 .user-navigation a:hover {
     color: #333;
     background-color: #f2f2f2;
@@ -122,12 +131,14 @@ h1, h2 {
     text-align: center;
 }
 
+/* Sets main section margi and padding */
 main {
     margin: 0;
     padding: 5px;
     padding-top: 5em;
 }
 
+/* Sets the background color and padding for text on homepage */
 .homepage {
     background-color: #f2f2f2;
     margin: 5em;
@@ -136,10 +147,12 @@ main {
     overflow: hidden;
 }
 
+/* Splits the text on homepage into two columns */
 .left, .right {
     float: left;
     width: 50%;
 }
+
 
 .homepage li, .homepage ul {
     padding: 5px;
@@ -149,34 +162,37 @@ main {
 Category and Trade Styles
 */
 
+/* sets the box-sizing property for all elements to border-box */
 * {
     box-sizing: border-box;
 }
 
+/* sets the font family for the body element */
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
+/* styles for the column class */
 .column {
     float: left;
     width: 25%;
     padding: 0 10px;
 }
 
-
+/* styles for the row class */
 .row {
     margin: 0 -5px;
+    padding-bottom: 15em;
 }
 
-
+/* clears the float property for the row class */
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
 
-
+/* Adds styling to the cards */
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 16px;
@@ -184,6 +200,7 @@ body {
     background-color: #f1f1f1;
 }
 
+/* Darkens the background of the card when hovering */
 .card:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1);
 }
