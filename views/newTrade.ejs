@@ -1,0 +1,46 @@
+<%- include('./partials/header.ejs')%>
+
+    <main>
+
+        <div class="form-container">
+            <h2>List an Item</h2>
+            <form action="trades.html">
+                <div class="form-row">
+                    <div class="form-left">
+                        <label for="itemName">Item Name</label>
+                    </div>
+                    <div class="form-right">
+                        <input type="text" id="itemName" name="itemName" placeholder="Item name..">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-left">
+                        <label for="category">Category</label>
+                    </div>
+                    <div class="form-right">
+                        <select id="category" name="category">
+                            <option value="camera">Camera</option>
+                            <option value="lens">Lens</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-left">
+                        <label for="details">Item Details</label>
+                    </div>
+                    <div class="form-right">
+                        <textarea id="details" name="details" placeholder="Add item details.."
+                            style="height:200px"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <input type="submit" value="Create Trade">
+                </div>
+            </form>
+        </div>
+
+
+    </main>
+
+    <%- include('./partials/footer.ejs')%>

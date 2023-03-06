@@ -1,0 +1,16 @@
+{
+  "name": "trade_project-bmccarn",
+  "version": "1.0.0",
+  "description": "Course project for ITIS 5166",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Blake McCarn",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0"
+  }
+}
