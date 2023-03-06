@@ -1,10 +1,10 @@
-<%- include('./partials/header.ejs')%>
+<%- include('../partials/header.ejs')%>
 
     <main>
 
         <div class="form-container">
             <h2>List an Item</h2>
-            <form action="trades.html">
+            <form action='/trades' method="post">
                 <div class="form-row">
                     <div class="form-left">
                         <label for="itemName">Item Name</label>
@@ -16,12 +16,24 @@
 
                 <div class="form-row">
                     <div class="form-left">
-                        <label for="category">Category</label>
+                        <label for="Category">Category</label>
                     </div>
                     <div class="form-right">
                         <select id="category" name="category">
-                            <option value="camera">Camera</option>
-                            <option value="lens">Lens</option>
+                            <option value="Camera">Camera</option>
+                            <option value="Lens">Lens</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-left">
+                        <label for="Status">Status</label>
+                    </div>
+                    <div class="form-right">
+                        <select id="status" name="status">
+                            <option value="Available">Available</option>
+                            <option value="Unavailable">Unavailable</option>
+                            <option value="Pending">Pending</option>
                         </select>
                     </div>
                 </div>
@@ -43,4 +55,4 @@
 
     </main>
 
-    <%- include('./partials/footer.ejs')%>
+    <%- include('../partials/footer.ejs')%>

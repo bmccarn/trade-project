@@ -1,0 +1,58 @@
+<%- include('../partials/header.ejs')%>
+
+<main>
+
+    <div class="form-container">
+        <h2>Edit Item</h2>
+        <form action='/trades/<%= trade.id %>?_method=PUT' method="POST">
+            <div class="form-row">
+                <div class="form-left">
+                    <label for="itemName">Item Name</label>
+                </div>
+                <div class="form-right">
+                    <input type="text" id="itemName" name="itemName" value="<%= trade.itemName %>">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-left">
+                    <label for="category">Category</label>
+                </div>
+                <div class="form-right">
+                    <select id="category" name="category">
+                        <option value="Camera" <%= trade.category === "Camera" ? "selected" : "" %>>Camera</option>
+                        <option value="Lens" <%= trade.category === "Lens" ? "selected" : "" %>>Lens</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-left">
+                    <label for="status">Status</label>
+                </div>
+                <div class="form-right">
+                    <select id="status" name="status">
+                        <option value="Available" <%= trade.status === "Available" ? "selected" : "" %>>Available</option>
+                        <option value="Unavailable" <%= trade.status === "Unavailable" ? "selected" : "" %>>Unavailable</option>
+                        <option value="Pending" <%= trade.status === "Pending" ? "selected" : "" %>>Pending</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-left">
+                    <label for="details">Item Details</label>
+                </div>
+                <div class="form-right">
+                    <textarea id="details" name="details" placeholder="Add item details.."
+                        style="height:200px"><%= trade.details %></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <input type="submit" value="Update Trade">
+            </div>
+        </form>
+    </div>
+
+
+</main>
+
+<%- include('../partials/footer.ejs')%>

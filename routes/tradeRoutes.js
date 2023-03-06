@@ -19,7 +19,7 @@ router.post('/', controller.create);
 
 router.get('/:id', controller.show);
 
-//GET /storues/:id/edit: send html form for editing an existing trade
+//GET /trades/:id/edit: send html form for editing an existing trade
 
 router.get('/:id/edit', controller.edit);
 

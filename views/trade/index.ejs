@@ -1,88 +1,59 @@
-<%- include('./partials/header.ejs')%>
-
+<%- include('../partials/header.ejs')%>
     <main>
-
         <h1>Cameras</h1>
-
+        <br>
         <div class="row">
-            <div class="column">
-                <a href="trade.html">
-                    <div class="card">
-                        <img src="images/logo.png" alt="Sample image">
-                        <h3>Camera 1</h3>
-                        <p>Insert description here</p>
-                    </div>
-                </a>
-            </div>
-            <div class="column">
-                <a href="trade.html">
-                    <div class="card">
-                        <img src="images/logo.png" alt="Sample image">
-                        <h3>Camera 2</h3>
-                        <p>Insert description here</p>
-                    </div>
-                </a>
-            </div>
-            <div class="column">
-                <a href="trade.html">
-                    <div class="card">
-                        <img src="images/logo.png" alt="Sample image">
-                        <h3>Camera 3</h3>
-                        <p>Insert description here</p>
-                    </div>
-                </a>
-            </div>
-            <div class="column">
-                <a href="trade.html">
-                    <div class="card">
-                        <img src="images/logo.png" alt="Sample image">
-                        <h3>Camera 4</h3>
-                        <p>Insert description here</p>
-                    </div>
-                </a>
-            </div>
+            <%if(trades.length) {%>
+                <%trades.forEach(trade=>{%>
+                    <%if(trade.category==="Camera" ) {%>
+                        <div class="column">
+                            <a href="/trades/<%= trade.id %>">
+                                <div class="card">
+                                    <img src="<%= trade.image %>" alt="<%= trade.itemName %>">
+                                    <h3>
+                                        <%= trade.itemName %>
+                                    </h3>
+                                    <h4>
+                                      Status:   <%= trade.status %>
+                                    </h4>
+                                    <p>
+                                        Click to view details
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <%}%>
+                            <%}); } else {%>
+                                <p>There are no cameras to display.</p>
+                                <%}%>
         </div>
 
         <h1>Lenses</h1>
-
+        <br>
         <div class="row">
-            <div class="column">
-                <a href="trade.html">
-                    <div class="card">
-                        <img src="images/logo.png" alt="Sample image">
-                        <h3>Lens 1</h3>
-                        <p>Insert description here</p>
-                    </div>
-                </a>
-            </div>
-            <div class="column">
-                <a href="trade.html">
-                    <div class="card">
-                        <img src="images/logo.png" alt="Sample image">
-                        <h3>Lens 2</h3>
-                        <p>Insert description here</p>
-                    </div>
-                </a>
-            </div>
-            <div class="column">
-                <a href="trade.html">
-                    <div class="card">
-                        <img src="images/logo.png" alt="Sample image">
-                        <h3>Lens 3</h3>
-                        <p>Insert description here</p>
-                    </div>
-                </a>
-            </div>
-            <div class="column">
-                <a href="trade.html">
-                    <div class="card">
-                        <img src="images/logo.png" alt="Sample image">
-                        <h3>Lens 4</h3>
-                        <p>Insert description here</p>
-                    </div>
-                </a>
-            </div>
+            <%if(trades.length) {%>
+                <%trades.forEach(trade=>{%>
+                    <%if(trade.category==="Lens" ) {%>
+                        <div class="column">
+                            <a href="/trades/<%= trade.id %>">
+                                <div class="card">
+                                    <img src="<%= trade.image %>" alt="<%= trade.itemName %>">
+                                    <h3>
+                                        <%= trade.itemName %>
+                                    </h3>
+                                    <h4>
+                                        Status: <%= trade.status %>
+                                    </h4>
+                                    <p>
+                                        Click to view details
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <%}%>
+                            <%}); } else {%>
+                                <p>There are no lenses to display.</p>
+                                <%}%>
         </div>
     </main>
-
-    <%- include('./partials/footer.ejs')%>
+    <%- include('../partials/footer.ejs')%>
