@@ -1,0 +1,76 @@
+<%- include('../partials/header.ejs')%>
+
+    <main>
+
+        <h1>Contact Us</h1>
+
+        <div class="homepage">
+            <h2>Get in Touch</h2>
+
+            <hr>
+
+            <p>At ShutterTrade, we're always here to help. Whether you have a question, a suggestion, or just want to
+                say hi, we'd love to hear from you!</p>
+
+            <p>Here are a few ways to get in touch with us:</p>
+
+            <ul>
+                <li>Fill out the form below and we'll get back to you as soon as we can</li>
+                <li>Send us an email at support@shuttertrade.com</li>
+                <li>Follow us on social media and send us a message on Facebook, Instagram, or Twitter</li>
+            </ul>
+        </div>
+        <div class="form-container">
+            <h2>Contact Form</h2>
+
+            <form action='/contact' method="post">
+                <div class="form-row">
+                    <div class="form-left">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="form-right">
+                        <input type="text" id="name" name="name" placeholder="Your name..">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-left">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="form-right">
+                        <input type="email" id="email" name="email" placeholder="Your email..">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-left">
+                        <label for="message">Message</label>
+                    </div>
+                    <div class="form-right">
+                        <textarea id="message" name="message" placeholder="Your message.."
+                            style="height:200px"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <input type="submit" value="Send Message">
+                </div>
+            </form>
+        </div>
+        </div>
+
+        <div class="homepage">
+            <h2>Our Office</h2>
+
+            <hr>
+
+            <p>ShutterTrade HQ is located in the heart of the photography world, New York City. If you're in the area,
+                feel free to drop by and say hi!</p>
+
+            <p>Address: 123 Main St, New York, NY 10001</p>
+            <p>Phone: (123) 555-1212</p>
+            <p>Email: info@shuttertrade.com</p>
+        </div>
+    </main>
+
+    <%- include('../partials/footer.ejs')%>

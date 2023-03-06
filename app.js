@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const tradeRoutes = require('./routes/tradeRoutes');
+const mainRoutes = require('./routes/mainRoutes');
 
 //create app
 const app = express();
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/trades', tradeRoutes);
+app.use('/main', mainRoutes);
 
 app.use((req, res, next) => { 
     let err = new Error('The server cannot locate ' + req.url);
