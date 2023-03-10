@@ -11,6 +11,10 @@ router.get('/', controller.index);
 
 router.get('/contact', controller.contact);
 
+//POST request to /contact: send the contact page to the user (used for contact form submission)
+
+router.post('/contact', controller.contact);
+
 //GET request to /about: send the about page to the user
 
 router.get('/about', controller.about);

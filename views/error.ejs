@@ -1,10 +1,13 @@
 <%- include('./partials/header.ejs')%>
-    
+
+    <div class="error">
+        <h2>Oh no! Don't worry, this error is just a case of the wrong lens. We'll fix it.</h2>
         <h3>
             <%= error.status%> Error
         </h3>
         <p>
             <%= error.message %>
         </p>
-    
+    </div>
+
     <%- include('./partials/footer.ejs')%>

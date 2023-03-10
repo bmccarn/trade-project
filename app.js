@@ -20,9 +20,9 @@ app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 
 //set up routes
-app.get('/', (req, res) => {
-    res.render('index');
-});
+// app.get('/', (req, res) => {
+//     res.render('main/index');
+// });
 
 app.use('/trades', tradeRoutes);
 app.use('/main', mainRoutes);
