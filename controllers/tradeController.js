@@ -1,8 +1,15 @@
 const model = require('../models/trade');
 
 exports.index = (req, res, next) => {
+    // model.find()
+    //     .then(trades => res.render('./trade/index', { trades }))
+    //     .catch(err => next(err));
+
     model.find()
-        .then(trades => res.render('./trade/index', { trades }))
+        .then(trades => {
+            const categories = [...new Set(trades.map(trade => trade.category))];
+            res.render('./trade/index', { trades, categories });
+        })
         .catch(err => next(err));
 };
 
