@@ -1,10 +1,13 @@
 const model = require('../models/trade');
 
-exports.index = (req, res, next) => {
-    // model.find()
-    //     .then(trades => res.render('./trade/index', { trades }))
-    //     .catch(err => next(err));
+//function to format the categories prior to adding to database
+function capitalizeFirstLetterOfEachWord(str) {
+    return str.replace(/\w\S*/g, function (word) {
+      return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+    });
+  }
 
+exports.index = (req, res, next) => {
     model.find()
         .then(trades => {
             const categories = [...new Set(trades.map(trade => trade.category))];
@@ -19,6 +22,8 @@ exports.new = (req, res) => {
 
 exports.create = (req, res, next) => {
     let trade = new model(req.body);
+    trade.category = capitalizeFirstLetterOfEachWord(trade.category);
+
     trade.save()
         .then(trade => res.redirect('/trades'))
         .catch(err => {
@@ -78,6 +83,8 @@ exports.update = (req, res, next) => {
         err.status = 400;
         return next(err);
     }
+
+    trade.category = capitalizeFirstLetterOfEachWord(trade.category);
 
     model.findByIdAndUpdate(id, trade, { useFindAndModify: false, runValidators: true })
         .then(trade => {

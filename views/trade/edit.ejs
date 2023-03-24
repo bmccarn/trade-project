@@ -19,10 +19,7 @@
                     <label for="category">Category</label>
                 </div>
                 <div class="form-right">
-                    <select id="category" name="category">
-                        <option value="Camera" <%= trade.category === "Camera" ? "selected" : "" %>>Camera</option>
-                        <option value="Lens" <%= trade.category === "Lens" ? "selected" : "" %>>Lens</option>
-                    </select>
+                    <input type="text" id="category" name="category" value="<%= trade.category %>" placeholder="Category..">
                 </div>
             </div>
             <div class="form-row">
