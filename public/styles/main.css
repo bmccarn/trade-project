@@ -330,3 +330,14 @@ input[type=submit] {
     text-align: center;
 }
 
+/* Form requirements */
+.form-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .form-error::before {
+    content: "⚠ ";
+  }
+  
