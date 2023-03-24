@@ -1,12 +1,13 @@
 <%- include('../partials/header.ejs')%>
     <main>
-        <% categories.forEach(category=> { %>
-            <h1>
-                <%= category %>
-            </h1>
-            <br>
-            <div class="row">
-                <% let itemsInCategory=trades.filter(trade=> trade.category === category); %>
+        <% if (trades.length > 0) { %>
+            <% categories.forEach(category=> { %>
+                <h1>
+                    <%= category %>
+                </h1>
+                <br>
+                <div class="row">
+                    <% let itemsInCategory=trades.filter(trade=> trade.category === category); %>
                     <% if (itemsInCategory.length) { %>
                         <% itemsInCategory.forEach(trade=> { %>
                             <div class="column">
@@ -25,11 +26,14 @@
                                     </div>
                                 </a>
                             </div>
-                            <% }); %>
-                                <% } else { %>
-                                    <p>There are no <%= category.toLowerCase() %> items to display.</p>
-                                    <% } %>
-            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>There are no <%= category.toLowerCase() %> items to display.</p>
+                    <% } %>
+                </div>
             <% }); %>
+        <% } else { %>
+            <p>There are no items to display.</p>
+        <% } %>
     </main>
-    <%- include('../partials/footer.ejs')%>
+<%- include('../partials/footer.ejs')%>
