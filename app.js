@@ -31,6 +31,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 
+//disable the request for favicon.ico
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 //set up routes
 app.get('/', (req, res) => {
     res.render('main/index');
