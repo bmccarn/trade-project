@@ -37,7 +37,7 @@ exports.create = (req, res, next) => {
 exports.show = (req, res, next) => {
     let id = req.params.id;
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid trade id');
+        let err = new Error('Invalid trade ID');
         err.status = 400;
         return next(err);
     }
@@ -46,7 +46,7 @@ exports.show = (req, res, next) => {
             if (trade) {
                 res.render('./trade/show', { trade });
             } else {
-                let err = new Error('Cannot find a trade with id ' + id);
+                let err = new Error('Cannot find a trade with ID ' + id);
                 err.status = 404;
                 next(err);
             }
@@ -79,7 +79,7 @@ exports.update = (req, res, next) => {
     let id = req.params.id;
 
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid trade id');
+        let err = new Error('Invalid trade ID');
         err.status = 400;
         return next(err);
     }
@@ -91,7 +91,7 @@ exports.update = (req, res, next) => {
             if (trade) {
                 res.redirect('/trades/' + id);
             } else {
-                let err = new Error('Cannot find a trade with id ' + id);
+                let err = new Error('Cannot find a trade with ID ' + id);
                 err.status = 404;
                 next(err);
             }
@@ -107,7 +107,7 @@ exports.update = (req, res, next) => {
 exports.delete = (req, res, next) => {
     let id = req.params.id;
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error('Invalid trade id');
+        let err = new Error('Invalid trade ID');
         err.status = 400
         return next(err);
     }
@@ -117,7 +117,7 @@ exports.delete = (req, res, next) => {
             if (trade) {
                 res.redirect('/trades');
             } else {
-                let err = new Error('Cannot find a trade with id ' + id);
+                let err = new Error('Cannot find a trade with ID ' + id);
                 err.status = 404;
                 next(err);
             }
