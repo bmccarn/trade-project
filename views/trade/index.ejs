@@ -13,7 +13,7 @@
                             <div class="column">
                                 <a href="/trades/<%= trade.id %>">
                                     <div class="card">
-                                        <img src="/images/camera_placeholder.png" alt="<%= trade.itemName %>">
+                                        <img src="<%= trade.image %>" alt="<%= trade.itemName %>">
                                         <h3>
                                             <%= trade.itemName %>
                                         </h3>
@@ -33,7 +33,7 @@
                 </div>
             <% }); %>
         <% } else { %>
-            <p>There are no items to display.</p>
+            <h2>Looks like there's nothing to trade right now! Come back later to see what's available.</h2>
         <% } %>
     </main>
 <%- include('../partials/footer.ejs')%>

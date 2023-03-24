@@ -2,7 +2,7 @@
     <main>
         <%if(trade) {%>
             <div class="trade-item">
-                <img src="/images/camera_placeholder.png" alt="<%= trade.itemName %>">
+                <img src="<%= trade.image %>" alt="<%= trade.itemName %>">
                 <div class="item-details">
                     <h1><%= trade.itemName %></h1>
                     <h2>Category: <%= trade.category %></h2>

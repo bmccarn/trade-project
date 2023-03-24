@@ -9,6 +9,7 @@ const tradeSchema = new Schema({
         minlength: [10, 'Details must be at least 10 characters long']
     },
     status: { type: String, required: [true, 'Status is required'] },
+    image: { type: String, default: '/images/camera_placeholder.png' },
 },
     { timestamps: true });
 
