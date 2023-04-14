@@ -20,7 +20,7 @@ app.set('view engine', 'ejs');
 
 //connect to database
 mongoose.connect('mongodb://localhost:27017/tradingApp',
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+    { useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
         //start the server
         app.listen(port, host, () => {
@@ -42,7 +42,6 @@ app.use(
 app.use(flash());
 
 app.use((req, res, next) => {
-    
     res.locals.user = req.session.user||null;
     res.locals.errorMessages = req.flash('error');
     res.locals.successMessages = req.flash('success');
