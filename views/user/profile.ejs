@@ -1,3 +1,38 @@
 <%- include('../partials/header.ejs')%>
-
+<main>
+    <h2>Welcome, <%= user.firstName %></h2>
+    
+    <% if (trades.length) { %>
+        <p>You have the following trades:</p>
+        <table class="trade-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Posted on</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% trades.forEach(trade => { %>
+                    <tr>
+                        <td><a href="/trades/<%= trade.id %>"><%= trade.itemName %></a></td>
+                        <td><%= trade.category %></td>
+                        <td><%= trade.status %></td>
+                        <td><%= trade.createdAt %></td>
+                        <td>
+                            <form class="form-buttons">
+                                <button type="submit" formmethod="get" formaction="/trades/<%= trade.id %>/edit">Edit</button>
+                                <button type="submit" formmethod="post" formaction="/trades/<%= trade.id %>?_method=DELETE">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>You have no trades yet.</p>
+    <% } %>
+</main>
 <%- include('../partials/footer.ejs')%>

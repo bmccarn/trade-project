@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const tradeSchema = new Schema({
     itemName: { type: String, required: [true, 'Item name is required'] },
+    owner: {type: Schema.Types.ObjectId, ref: 'User'},
     category: { type: String, required: [true, 'Category is required'] },
     details: {
         type: String, required: [true, 'Details are required'],

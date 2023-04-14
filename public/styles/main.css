@@ -375,3 +375,52 @@ input[type=submit] {
     border: 1px solid #c3e6cb;
 }
 
+/* Profile Page Table Styles */
+.trade-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #f2f2f2;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.trade-table th,
+.trade-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+.trade-table th {
+    background-color: #333;
+    color: #f2f2f2;
+}
+
+.trade-table a {
+    color: #333;
+    text-decoration: underline;
+}
+
+.trade-table a:hover {
+    color: #f2f2f2;
+    background-color: #333;
+}
+
+.form-buttons button {
+    background-color: #333;
+    color: #fff;
+    padding: 6px 12px;
+    margin: 5px 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-buttons button:hover {
+    background-color: #f2f2f2;
+    color: #333;
+    border: 1px solid #333;
+}
+

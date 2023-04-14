@@ -20,13 +20,13 @@ exports.isLoggedIn = (req, res, next) => {
     }
 };
 
-//check if user is author of the trade
-exports.isAuthor = (req, res, next) => { 
+//check if user is owner of the trade
+exports.isOwner = (req, res, next) => { 
     let id = req.params.id;
     Trade.findById(id)
         .then(trade => {
             if (trade) {
-                if (trade.author == req.session.user)
+                if (trade.owner == req.session.user)
                     return next();
                 else {
                     let err = new Error('You are not authorized to access this resource');

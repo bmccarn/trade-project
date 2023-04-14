@@ -24,14 +24,15 @@ exports.create = (req, res, next) => {
     let trade = new model(req.body);
     trade.category = capitalizeFirstLetterOfEachWord(trade.category);
 
+    trade.owner = req.session.user;
     trade.save()
-        .then(trade => res.redirect('/trades'))
-        .catch(err => {
-            if (err.name === 'ValidationError') {
-                err.status = 400;
-            }
-            next(err);
-        });
+    .then(trade=> res.redirect('/trades'))
+    .catch(err=>{
+        if(err.name === 'ValidationError' ) {
+            err.status = 400;
+        }
+        next(err);
+    });
 };
 
 exports.show = (req, res, next) => {

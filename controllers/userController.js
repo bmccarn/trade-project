@@ -60,10 +60,10 @@ exports.login = (req, res, next) => {
 
 exports.profile = (req, res, next) => {
     let id = req.session.user;
-    Promise.all([model.findById(id), Trade.find({ author: id })])
+    Promise.all([model.findById(id), Trade.find({ owner: id })])
         .then(results => {
-            const [user, stories] = results;
-            res.render('./user/profile', { user, stories });
+            const [user, trades] = results;
+            res.render('./user/profile', { user, trades });
         })
         .catch(err => next(err));
 };
