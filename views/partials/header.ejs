@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>ShutterTrade | Home</title>
     <link href="/styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 
 <body>
@@ -18,9 +19,13 @@
         <nav class="user-navigation">
             <ul>
                 <li><a href="/trades/new">Start Trading</a></li>
-                <li><a href="/users/login">Login</a></li>
-                <li><a href="/users/new">Sign Up</a></li>
-                <li><a href="/users/profile">Profile</a></li>
+                <% if(!user) {%>
+                    <li><a href='/users/new'>Sign Up</a></li>
+                    <li><a href='/users/login'>Login</a></li>
+               <% } else {%>
+                <li><a href='/users/profile'>Profile</a></li>
+                    <li><a href='/users/logout'>Logout</a></li>
+               <% }%>
             </ul>
         </nav>
     </header>
@@ -30,4 +35,22 @@
             <li><a href="#">Placeholder</a></li>
             <li><a href="#">Placeholder</a></li>
         </ul>
+    </div>
+
+    <div class="flash-messages-container">
+        <% if(errorMessages.length > 0) {%>
+            <% errorMessages.forEach(message => { %>
+                <div class='flash-message flash-error'>
+                    <%= message %>
+                </div>
+            <% }); %>
+        <% } %>
+    
+        <% if(successMessages.length > 0) {%>
+            <% successMessages.forEach(message => { %>
+                <div class='flash-message flash-success'>
+                    <%= message %>
+                </div>
+            <% }); %>
+        <% } %>
     </div>
