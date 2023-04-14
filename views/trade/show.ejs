@@ -13,10 +13,12 @@
                     <p><%= trade.details %></p>
                 </div>
             </div>
+            <% if(user == trade.owner._id){ %>
             <form class="form-buttons">
                 <button type="submit" formmethod="get" formaction="/trades/<%= trade.id %>/edit">Edit</button>
                 <button type="submit" formmethod="post" formaction="/trades/<%= trade.id %>?_method=DELETE">Delete</button>
             </form>
+            <% } %>
         <%} else {%>
             <p>The trade item could not be found.</p>
         <%}%>
