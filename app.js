@@ -3,8 +3,12 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
 const tradeRoutes = require('./routes/tradeRoutes');
 const mainRoutes = require('./routes/mainRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 //create app
 const app = express();
@@ -16,7 +20,7 @@ app.set('view engine', 'ejs');
 
 //connect to database
 mongoose.connect('mongodb://localhost:27017/tradingApp',
-    { useNewUrlParser: true, useUnifiedTopology: true })
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => {
         //start the server
         app.listen(port, host, () => {
@@ -26,6 +30,25 @@ mongoose.connect('mongodb://localhost:27017/tradingApp',
     .catch((err) => console.log(err));
 
 //mount middleware
+app.use(
+    session({
+        secret: "ajfeirf90aeu9eroejfoefj",
+        resave: false,
+        saveUninitialized: false,
+        store: new MongoStore({mongoUrl: 'mongodb://localhost:27017/tradingApp'}),
+        cookie: {maxAge: 60*60*1000}
+        })
+);
+app.use(flash());
+
+app.use((req, res, next) => {
+    
+    res.locals.user = req.session.user||null;
+    res.locals.errorMessages = req.flash('error');
+    res.locals.successMessages = req.flash('success');
+    next();
+});
+
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
@@ -41,6 +64,7 @@ app.get('/', (req, res) => {
 
 app.use('/trades', tradeRoutes);
 app.use('/main', mainRoutes);
+app.use('/users', userRoutes);
 
 app.use((req, res, next) => { 
     let err = new Error('The server cannot locate ' + req.url);
