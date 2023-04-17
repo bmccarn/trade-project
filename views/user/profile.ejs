@@ -1,6 +1,6 @@
 <%- include('../partials/header.ejs')%>
 <main>
-    <h2>Welcome, <%= user.firstName %></h2>
+    <h2>Welcome, <%= user.firstName %>!</h2>
     
     <% if (trades.length) { %>
         <p>You have the following trades:</p>
@@ -32,7 +32,11 @@
             </tbody>
         </table>
     <% } else { %>
-        <p>You have no trades yet.</p>
+        <div class="no-trades-container">
+            <h3>It looks like you haven't listed any trades yet.</h3>
+            <p>Ready to get started? List your first item for trade!</p>
+            <a href="/trades/new" class="btn-start-trading">Start Trading</a>
+        </div>
     <% } %>
 </main>
 <%- include('../partials/footer.ejs')%>

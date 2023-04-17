@@ -131,7 +131,7 @@ h1, h2 {
     text-align: center;
 }
 
-/* Sets main section margi and padding */
+/* Sets main section margin and padding */
 main {
     margin: 0;
     padding: 5px;
@@ -237,8 +237,8 @@ Styling for New Trade
 */
 
 /* Form input styles */
-input[type=text], select, textarea {
-    width: 100%;
+input[type=text], input[type=email], input[type=password], select, textarea {
+    width: 75%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -330,18 +330,7 @@ input[type=submit] {
     text-align: center;
 }
 
-/* Form requirements */
-.form-error {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-  }
-  
-  .form-error::before {
-    content: "⚠ ";
-  }
 
-  
 /* Flash message formatting */
 
 /* Flash Messages Container */
@@ -359,8 +348,8 @@ input[type=submit] {
     margin: 5px;
     border-radius: 5px;
     text-align: center;
-    width: 90%; /* Adjust width based on your design */
-    max-width: 600px; /* Adjust max-width based on your design */
+    width: 90%; 
+    max-width: 600px; 
 }
 
 .flash-error {
@@ -375,7 +364,7 @@ input[type=submit] {
     border: 1px solid #c3e6cb;
 }
 
-/* Profile Page Table Styles */
+/* Profile Page Styles */
 .trade-table {
     width: 100%;
     border-collapse: collapse;
@@ -423,4 +412,26 @@ input[type=submit] {
     color: #333;
     border: 1px solid #333;
 }
+
+.no-trades-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.btn-start-trading {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-start-trading:hover {
+    background-color: #f2f2f2;
+    color: #333;
+    border: 1px solid #333;
+}
+
 

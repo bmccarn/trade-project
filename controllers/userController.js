@@ -17,7 +17,7 @@ exports.create = (req, res, next) => {
                 }
 
                 if (err.code === 11000) {
-                    req.flash('error', 'Email has been used');
+                    req.flash('error', 'Account already exists, please try a different email address');
                     return res.redirect('/users/new');
                 }
 
@@ -38,8 +38,8 @@ exports.login = (req, res, next) => {
         model.findOne({ email: email })
             .then(user => {
                 if (!user) {
-                    console.log('wrong email address');
-                    req.flash('error', 'wrong email address');
+                    console.log('Wrong email address');
+                    req.flash('error', 'Wrong email address');
                     res.redirect('/users/login');
                 } else {
                     user.comparePassword(password)
