@@ -26,7 +26,10 @@ exports.create = (req, res, next) => {
 
     trade.owner = req.session.user;
     trade.save()
-    .then(trade=> res.redirect('/trades'))
+    .then(trade => {
+        req.flash('success', 'Trade has been successfully created.'); 
+        res.redirect('/trades');
+    })
     .catch(err=>{
         if(err.name === 'ValidationError' ) {
             err.status = 400;
@@ -92,6 +95,7 @@ exports.update = (req, res, next) => {
     model.findByIdAndUpdate(id, trade, { useFindAndModify: false, runValidators: true })
         .then(trade => {
             if (trade) {
+                req.flash('success', 'Trade has been successfully updated.');
                 res.redirect('/trades/' + id);
             } else {
                 let err = new Error('Cannot find a trade with ID ' + id);
@@ -120,6 +124,7 @@ exports.delete = (req, res, next) => {
     model.findByIdAndDelete(id, { useFindAndModify: false })
         .then(trade => {
             if (trade) {
+                req.flash('success', 'Trade has been successfully deleted.');
                 res.redirect('/trades');
             } else {
                 let err = new Error('Cannot find a trade with ID ' + id);
