@@ -1,0 +1,172 @@
+[{
+  "_id": {
+    "$oid": "6445b116daab353ba9fb9876"
+  },
+  "itemName": "Canon R5",
+  "category": "Camera",
+  "details": "The Canon R5 is a high-end full-frame mirrorless camera suitable for professional photographers. Features 45 MP sensor and 8K video recording.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b08cdaab353ba9fb986f"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:28:38.729Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:28:38.729Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6445b139daab353ba9fb9879"
+  },
+  "itemName": "Nikon AF-S NIKKOR 50mm f/1.8G",
+  "category": "Lens",
+  "details": "The Nikon 50mm f/1.8G is a fast prime lens, great for portraits and low light photography. Excellent condition.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b08cdaab353ba9fb986f"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:29:13.358Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:29:13.358Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6445b159daab353ba9fb987c"
+  },
+  "itemName": "Manfrotto Tripod",
+  "category": "Accessories",
+  "details": "Manfrotto tripod with ball head, ideal for landscape and studio photography. Sturdy and reliable.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b08cdaab353ba9fb986f"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:29:45.552Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:29:45.552Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6445b186daab353ba9fb9882"
+  },
+  "itemName": "Sony Alpha a7 III",
+  "category": "Camera",
+  "details": "The Sony a7 III is a versatile mirrorless camera with a 24.2 MP full-frame sensor. It has 4K video capability and great low-light performance.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b0a7daab353ba9fb9871"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:30:30.012Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:30:30.012Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6445b1a4daab353ba9fb9885"
+  },
+  "itemName": "Sigma 35mm f/1.4 DG HSM Art",
+  "category": "Lens",
+  "details": "The Sigma 35mm f/1.4 Art lens is known for its sharpness and beautiful bokeh. Suitable for portraits and street photography.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b0a7daab353ba9fb9871"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:31:00.183Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:31:00.183Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6445b1c1daab353ba9fb9888"
+  },
+  "itemName": "Godox V1 Flash",
+  "category": "Accessories",
+  "details": "Godox V1 Flash with a round head, compatible with Canon cameras. Provides powerful and even lighting for various photography scenarios.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b0a7daab353ba9fb9871"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:31:29.698Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:31:29.698Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6445b2a7daab353ba9fb988d"
+  },
+  "itemName": "Fujifilm X-T4",
+  "category": "Camera",
+  "details": "The Fujifilm X-T4 is a mirrorless camera with a 26.1 MP APS-C sensor. Known for its color science and film simulations. Includes 4K video recording.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b0a7daab353ba9fb9871"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:35:19.966Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:35:19.966Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6445b2bcdaab353ba9fb9890"
+  },
+  "itemName": "Canon EF 70-200mm f/2.8L IS III USM",
+  "category": "Lens",
+  "details": "The Canon EF 70-200mm f/2.8L is a versatile telephoto zoom lens. Ideal for sports, wildlife, and portraits. Comes with image stabilization.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b0a7daab353ba9fb9871"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:35:40.253Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:35:40.253Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6445b2d5daab353ba9fb9893"
+  },
+  "itemName": "Rode VideoMic Pro+",
+  "category": "Accessories",
+  "details": "The Rode VideoMic Pro+ is a shotgun microphone designed for use with DSLR and mirrorless cameras. Provides high-quality audio for video recording.",
+  "status": "Available",
+  "image": "/images/camera_placeholder.png",
+  "owner": {
+    "$oid": "6445b0a7daab353ba9fb9871"
+  },
+  "createdAt": {
+    "$date": "2023-04-23T22:36:05.045Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-23T22:36:05.045Z"
+  },
+  "__v": 0
+}]
