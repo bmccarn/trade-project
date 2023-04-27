@@ -16,8 +16,8 @@ exports.validateId = (req, res, next) => {
     }
 };
 
-exports.validateSignup = [body('firstName').notEmpty().trim().escape(),
-body('lastName').notEmpty().trim().escape(),
+exports.validateSignup = [body('firstName', 'First name cannot be empty').notEmpty().trim().escape(),
+body('lastName', 'Last name cannot be empty').notEmpty().trim().escape(),
 body('email', 'Email must be a valid email address').isEmail().trim().escape().normalizeEmail(),
 body('password', 'Password must be at least 8 characters and at most 64 characters').isLength({ min: 8, max: 64 })
 ];
