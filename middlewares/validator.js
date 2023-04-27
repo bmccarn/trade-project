@@ -10,7 +10,7 @@ exports.validateId = (req, res, next) => {
         next();
     } else {
         // If invalid, call the default error handler with a status code of 400
-        let err = new Error('Invalid story id');
+        let err = new Error('Invalid trade id');
         err.status = 400;
         next(err);
     }
