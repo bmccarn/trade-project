@@ -1,0 +1,33 @@
+<%- include('../partials/header.ejs')%>
+<main>
+    <h2>Make Trade Offer</h2>
+    <p>You are making an offer to trade for: <%= requestedItem.itemName %></p>
+    <img src="<%= requestedItem.image %>" alt="<%= requestedItem.itemName %>" class="requested-item-image">
+    
+    <% if (userItems.length) { %>
+        <form class="make-offer-form" action="/trade-offers/submit" method="POST">
+            <h3>Select one of your items to offer:</h3>
+            <ul class="user-items-list">
+                <% userItems.forEach(item => { %>
+                    <li>
+                        <label>
+                            <input type="radio" name="offeredItemId" value="<%= item.id %>" required>
+                            <span><%= item.itemName %></span>
+                            <img src="<%= item.image %>" alt="<%= item.itemName %>" class="offered-item-image">
+                        </label>
+                    </li>
+                <% }) %>
+            </ul>
+            <!-- Include the requested item ID as a hidden input field -->
+            <input type="hidden" name="requestedItemId" value="<%= requestedItem.id %>">
+            <button type="submit" class="btn-submit-offer">Submit Offer</button>
+        </form>
+    <% } else { %>
+        <div class="no-items-container">
+            <h3>It looks like you haven't listed any items for trade yet.</h3>
+            <p>Before making an offer, please list at least one item for trade.</p>
+            <a href="/trades/new" class="btn-start-trading">List an Item</a>
+        </div>
+    <% } %>
+</main>
+<%- include('../partials/footer.ejs')%>

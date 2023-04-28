@@ -9,7 +9,12 @@ const tradeSchema = new Schema({
         type: String, required: [true, 'Details are required'],
         minlength: [10, 'Details must be at least 10 characters long']
     },
-    status: { type: String, required: [true, 'Status is required'] },
+    status: {
+        type: String,
+        default: 'Available',
+        enum: ['Available', 'Pending'],
+        required: true
+    },
     image: { type: String, default: '/images/camera_placeholder.png' },
 },
     { timestamps: true });

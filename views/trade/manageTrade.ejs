@@ -1,0 +1,29 @@
+<%- include('../partials/header.ejs') %>
+<main>
+    <h2>Manage Trade</h2>
+    <div class="trade-item">
+        <h3>Offered Item</h3>
+        <img src="<%= offeredItem.image %>" alt="<%= offeredItem.itemName %>">
+        <h4><%= offeredItem.itemName %></h4>
+        <p>Category: <%= offeredItem.category %></p>
+        <p>Owner: <%= offeredItem.owner.firstName %> <%= offeredItem.owner.lastName %></p>
+    </div>
+    <div class="trade-item">
+        <h3>Requested Item</h3>
+        <img src="<%= requestedItem.image %>" alt="<%= requestedItem.itemName %>">
+        <h4><%= requestedItem.itemName %></h4>
+        <p>Category: <%= requestedItem.category %></p>
+        <p>Owner: <%= requestedItem.owner.firstName %> <%= requestedItem.owner.lastName %></p>
+    </div>
+    <% if (isOfferer) { %>
+        <form class="form-buttons">
+            <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/withdraw">Withdraw Offer</button>
+        </form>
+    <% } else if (isReceiver) { %>
+        <form class="form-buttons">
+            <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/accept">Accept Offer</button>
+            <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/reject">Reject Offer</button>
+        </form>
+    <% } %>
+</main>
+<%- include('../partials/footer.ejs') %>
