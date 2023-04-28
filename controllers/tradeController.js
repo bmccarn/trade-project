@@ -134,3 +134,67 @@ exports.delete = (req, res, next) => {
         })
         .catch(err => next(err));
 };
+
+// Offer/Watchlist functions
+
+exports.makeOffer = async (req, res, next) => {
+    let requestedTradeId = req.params.id;
+    let userId = req.session.user;
+
+    try {
+        // Find the requested trade
+        const requestedTrade = await model.findById(requestedTradeId);
+
+        // Check if the current user is the owner of the requested trade
+        if (requestedTrade.owner.toString() === userId) {
+            req.flash('error', 'You cannot make an offer to trade with yourself.');
+            return res.redirect('/trades/' + requestedTradeId);
+        }
+
+        // Find all trades posted by the current user
+        const userTrades = await model.find({ owner: userId, _id: { $ne: requestedTradeId } });
+
+        // Render the makeOffer.ejs view with the requested trade and the user's trades
+        res.render('./trade/makeOffer', { requestedTrade, userTrades });
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.submitOffer = async (req, res, next) => {
+    let requestedTradeId = req.params.id;
+    let offeredTradeId = req.body.offeredTradeId; // Extract the offeredTradeId from the form data
+    let userId = req.session.user;
+
+    try {
+        // Find the requested trade and the offered trade
+        const requestedTrade = await model.findById(requestedTradeId);
+        const offeredTrade = await model.findById(offeredTradeId);
+
+        // Check if the current user is the owner of the offered trade
+        if (offeredTrade.owner.toString() !== userId) {
+            req.flash('error', 'You are not the owner of the offered trade.');
+            return res.redirect('/trades/' + requestedTradeId + '/offer');
+        }
+
+        // Check if the current user is the owner of the requested trade
+        if (requestedTrade.owner.toString() === userId) {
+            req.flash('error', 'You cannot make an offer to trade with yourself.');
+            return res.redirect('/trades/' + requestedTradeId + '/offer');
+        }
+
+        // Update the status of both the requestedTrade and offeredTrade to "pending"
+        requestedTrade.status = "Pending";
+        offeredTrade.status = "Pending";
+
+        // Save the updated trades
+        await requestedTrade.save();
+        await offeredTrade.save();
+
+        // Redirect the user to the trade detail page and display a success message
+        req.flash('success', 'Trade offer has been successfully submitted.');
+        res.redirect('/trades/' + requestedTradeId);
+    } catch (err) {
+        next(err);
+    }
+};

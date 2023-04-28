@@ -26,4 +26,12 @@ router.put('/:id', validateId, isLoggedIn, isOwner, validateTrade, controller.up
 // DELETE /trades/:id: delete the trade identified by id
 router.delete('/:id', validateId, isLoggedIn, isOwner, controller.delete); // Ensure user is logged in and is owner
 
+router.get('/:id/offer', isLoggedIn, validateId, controller.makeOffer);
+
+// POST /trades/:tradeId/make-offer: create a new trade offer
+router.post('/:id/make-offer', isLoggedIn, validateId, controller.makeOffer); // Ensure user is logged in
+
+// POST /trades/:id/submit-offer: submit a new trade offer
+router.post('/:id/submit-offer', isLoggedIn, validateId, controller.submitOffer); // Ensure user is logged in
+
 module.exports = router;
