@@ -101,8 +101,6 @@ exports.profile = async (req, res, next) => {
             offer.offererUser.equals(userId) || (offer.requestedItem && offer.requestedItem.owner.equals(userId))
         );
 
-        // Debugging: Log the filteredCompletedTradeOffers array to the console
-        console.log('Filtered Completed Trade Offers:', filteredCompletedTradeOffers);
 
         res.render('./user/profile', {
             user, 

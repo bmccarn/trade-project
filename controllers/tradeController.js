@@ -114,27 +114,48 @@ exports.update = (req, res, next) => {
         });
 };
 
-exports.delete = (req, res, next) => {
+exports.delete = async (req, res, next) => {
     let id = req.params.id;
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
         let err = new Error('Invalid trade ID');
-        err.status = 400
+        err.status = 400;
         return next(err);
     }
 
-    model.findByIdAndDelete(id, { useFindAndModify: false })
-        .then(trade => {
-            if (trade) {
-                req.flash('success', 'Trade has been successfully deleted.');
-                res.redirect('/trades');
-            } else {
-                let err = new Error('Cannot find a trade with ID ' + id);
-                err.status = 404;
-                next(err);
-            }
-        })
-        .catch(err => next(err));
+    try {
+        // Find trade offers where the item being deleted is either the offeredItem or requestedItem
+        const tradeOffers = await TradeOffer.find({
+            $or: [{ offeredItem: id }, { requestedItem: id }],
+            status: 'Pending' // Only consider pending trade offers
+        });
+
+        // Delete each trade offer and set the status of the other person's item back to "Available"
+        for (const offer of tradeOffers) {
+            // Identify the other person's item
+            const otherItemId = offer.offeredItem.equals(id) ? offer.requestedItem : offer.offeredItem;
+            // Set the status of the other person's item back to "Available"
+            await model.findByIdAndUpdate(otherItemId, { status: 'Available' });
+
+            // Delete the trade offer
+            await TradeOffer.findByIdAndDelete(offer._id);
+        }
+
+        // Delete the item from the trades collection
+        const trade = await model.findByIdAndDelete(id, { useFindAndModify: false });
+
+        if (trade) {
+            req.flash('success', 'Trade has been successfully deleted.');
+            res.redirect('/trades');
+        } else {
+            let err = new Error('Cannot find a trade with ID ' + id);
+            err.status = 404;
+            next(err);
+        }
+    } catch (err) {
+        next(err);
+    }
 };
+
 
 // Offer/Watchlist functions
 
