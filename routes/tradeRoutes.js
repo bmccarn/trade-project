@@ -43,4 +43,10 @@ router.post('/trade-offers/:id/accept', isLoggedIn, validateId, controller.accep
 // POST /trade-offers/:id/reject: reject an existing trade offer
 router.post('/trade-offers/:id/reject', isLoggedIn, validateId, controller.rejectOffer); // Ensure user is logged in
 
+// Route to add an item to the watchlist
+router.post('/:id/watch', isLoggedIn, validateId, controller.addToWatchlist);
+
+// Route to remove an item from the watchlist
+router.delete('/:id/watch', isLoggedIn, validateId, controller.removeFromWatchlist);
+
 module.exports = router;

@@ -1,5 +1,6 @@
 const model = require('../models/trade');
 const TradeOffer = require('../models/tradeOffer');
+const User = require('../models/user');
 
 //function to format the categories prior to adding to database
 function capitalizeFirstLetterOfEachWord(str) {
@@ -43,15 +44,17 @@ exports.create = (req, res, next) => {
 
 exports.show = (req, res, next) => {
     let id = req.params.id;
+    let userId = req.session.user; // Get the current user ID from the session
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
         let err = new Error('Invalid trade ID');
         err.status = 400;
         return next(err);
     }
     model.findById(id)
-        .then(trade => {
+        .then(async trade => { // Mark the function as async
             if (trade) {
-                res.render('./trade/show', { trade });
+                const user = await User.findById(userId); // Find the current user
+                res.render('./trade/show', { trade, user }); // Pass the user object to the view
             } else {
                 let err = new Error('Cannot find a trade with ID ' + id);
                 err.status = 404;
@@ -326,6 +329,55 @@ exports.rejectOffer = async (req, res, next) => {
         // Redirect the user to the profile page with success message
         req.flash('success', 'Trade offer has been successfully rejected.');
         res.redirect('/users/profile');
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Controller function to add an item to the user's watchlist
+exports.addToWatchlist = async (req, res, next) => {
+    const tradeId = req.params.id; // The ID of the trade item to add to the watchlist
+    const userId = req.session.user; // The ID of the current user
+
+    try {
+        // Find the trade item
+        const trade = await model.findById(tradeId);
+
+        // Validate that the current user is not the owner of the trade item
+        if (trade.owner.toString() === userId) {
+            req.flash('error', 'You cannot add your own item to the watchlist.');
+            return res.redirect('/trades/' + tradeId);
+        }
+
+        // Find the current user and update their watchlist
+        const user = await User.findById(userId);
+        if (!user.watchlist.includes(tradeId)) {
+            user.watchlist.push(tradeId);
+            await user.save();
+            req.flash('success', 'Trade item has been successfully added to your watchlist.');
+        } else {
+            req.flash('info', 'Trade item is already in your watchlist.');
+        }
+
+        res.redirect('/trades/' + tradeId);
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Controller function to remove an item from the user's watchlist
+exports.removeFromWatchlist = async (req, res, next) => {
+    const tradeId = req.params.id; // The ID of the trade item to remove from the watchlist
+    const userId = req.session.user; // The ID of the current user
+
+    try {
+        // Find the current user and update their watchlist
+        const user = await User.findById(userId);
+        user.watchlist = user.watchlist.filter(item => !item.equals(tradeId));
+        await user.save();
+
+        req.flash('success', 'Trade item has been successfully removed from your watchlist.');
+        res.redirect('/trades/' + tradeId);
     } catch (err) {
         next(err);
     }

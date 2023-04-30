@@ -14,15 +14,19 @@
                 </div>
             </div>
             <% if(user == trade.owner._id){ %>
-            <form class="form-buttons">
-                <button type="submit" formmethod="get" formaction="/trades/<%= trade.id %>/edit">Edit</button>
-                <button type="submit" formmethod="post" formaction="/trades/<%= trade.id %>?_method=DELETE">Delete</button>
-            </form>
+                <form class="form-buttons">
+                    <button type="submit" formmethod="get" formaction="/trades/<%= trade.id %>/edit">Edit</button>
+                    <button type="submit" formmethod="post" formaction="/trades/<%= trade.id %>?_method=DELETE">Delete</button>
+                </form>
             <% } else { %>
-            <form class="form-buttons">
-                <button type="submit" formmethod="post" formaction="/trades/<%= trade.id %>/watch">Watch Trade</button>
-                <button type="submit" formmethod="get" formaction="/trades/<%= trade.id %>/offer">Make Offer</button>
-            </form>
+                <form class="form-buttons">
+                    <% if(user.watchlist.includes(trade._id)) { %> <!-- Check if the trade is in the user's watchlist -->
+                        <button type="submit" formmethod="post" formaction="/trades/<%= trade.id %>/watch?_method=DELETE">Unwatch Trade</button>
+                    <% } else { %> <!-- If the trade is not in the user's watchlist, show the Watch Trade button -->
+                        <button type="submit" formmethod="post" formaction="/trades/<%= trade.id %>/watch">Watch Trade</button>
+                    <% } %>
+                    <button type="submit" formmethod="get" formaction="/trades/<%= trade.id %>/offer">Make Offer</button>
+                </form>
             <% } %>
         <%} else {%>
             <p>The trade item could not be found.</p>

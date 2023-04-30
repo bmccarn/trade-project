@@ -62,21 +62,28 @@ exports.login = (req, res, next) => {
 exports.profile = async (req, res, next) => {
     let userId = req.session.user;
     try {
-        const user = await model.findById(userId);
+        const user = await model.findById(userId).populate('watchlist');
+
+        // Filter out items from the watchlist that are no longer available or are null
+        user.watchlist = user.watchlist.filter(item => item && item.status === 'Available');
+
+        // Save the updated watchlist
+        await user.save();
+
         const allTrades = await Trade.find({ owner: userId });
         const availableTrades = allTrades.filter(trade => trade.status === 'Available');
         const pendingTrades = allTrades.filter(trade => trade.status === 'Pending');
-        
+
         // Fetch sent trade offers and populate offeredItem and requestedItem fields
         const sentTradeOffers = await TradeOffer.find({ offererUser: userId })
             .populate('offeredItem')
             .populate('requestedItem');
-        
+
         // Filter out any accepted entries or null items in sentTradeOffers and only include "Pending" offers
         const filteredSentTradeOffers = sentTradeOffers.filter(offer =>
             offer.status === 'Pending' && offer.offeredItem && offer.requestedItem
         );
-        
+
         // Fetch received trade offers and include owner information for requestedItem
         const receivedTradeOffers = await TradeOffer.find()
             .populate('offeredItem')
@@ -101,19 +108,20 @@ exports.profile = async (req, res, next) => {
             offer.offererUser.equals(userId) || (offer.requestedItem && offer.requestedItem.owner.equals(userId))
         );
 
-
         res.render('./user/profile', {
             user, 
             availableTrades, 
             pendingTrades, 
             sentTradeOffers: filteredSentTradeOffers, // Use the filtered array for sent trade offers
             filteredReceivedTradeOffers,
-            completedTradeOffers: filteredCompletedTradeOffers // Use the filtered array when rendering the view
+            completedTradeOffers: filteredCompletedTradeOffers, // Use the filtered array when rendering the view
+            watchlist: user.watchlist // Render the user's updated watchlist
         });
     } catch (err) {
         next(err);
     }
 };
+
 
 
 

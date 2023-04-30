@@ -2,6 +2,34 @@
 <main>
     <h2>Welcome, <%= user.firstName %>!</h2>
 
+    <% if (watchlist.length) { %>
+        <h3>Watchlist:</h3>
+        <table class="trade-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% watchlist.forEach(trade => { %>
+                    <tr>
+                        <td><a href="/trades/<%= trade.id %>"><%= trade.itemName %></a></td>
+                        <td><%= trade.category %></td>
+                        <td><%= trade.status %></td>
+                        <td>
+                            <form class="form-buttons">
+                                <button type="submit" formmethod="post" formaction="/trades/<%= trade.id %>/watch?_method=DELETE">Unwatch</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+
     <% if (availableTrades.length) { %>
         <h3>You have listed the following trades:</h3>
         <table class="trade-table">
@@ -104,14 +132,12 @@
                             <tbody>
                                 <% completedTradeOffers.forEach(offer => { %>
                                     <% if (offer.offererUser.equals(user._id)) { %>
-                                        <!-- Current user is the sender -->
                                         <tr>
                                             <td><%= offer.offeredItem.itemName %></td>
                                             <td><%= offer.requestedItem.itemName %></td>
                                             <td><%= offer.updatedAt.toLocaleDateString() %></td>
                                         </tr>
                                     <% } else { %>
-                                        <!-- Current user is the recipient -->
                                         <tr>
                                             <td><%= offer.requestedItem.itemName %></td>
                                             <td><%= offer.offeredItem.itemName %></td>
