@@ -1,5 +1,6 @@
 const model = require('../models/user');
 const Trade = require('../models/trade');
+const TradeOffer = require('../models/tradeOffer');
 
 exports.new = (req, res) => {  
         return res.render('./user/new');
@@ -58,15 +59,74 @@ exports.login = (req, res, next) => {
             .catch(err => next(err)); 
 };
 
-exports.profile = (req, res, next) => {
-    let id = req.session.user;
-    Promise.all([model.findById(id), Trade.find({ owner: id })])
-        .then(results => {
-            const [user, trades] = results;
-            res.render('./user/profile', { user, trades });
-        })
-        .catch(err => next(err));
+exports.profile = async (req, res, next) => {
+    let userId = req.session.user;
+    try {
+        const user = await model.findById(userId);
+        const allTrades = await Trade.find({ owner: userId });
+        const availableTrades = allTrades.filter(trade => trade.status === 'Available');
+        const pendingTrades = allTrades.filter(trade => trade.status === 'Pending');
+        
+        // Fetch sent trade offers and populate offeredItem and requestedItem fields
+        const sentTradeOffers = await TradeOffer.find({ offererUser: userId })
+            .populate('offeredItem')
+            .populate('requestedItem');
+        
+        // Filter out any accepted entries or null items in sentTradeOffers and only include "Pending" offers
+        const filteredSentTradeOffers = sentTradeOffers.filter(offer =>
+            offer.status === 'Pending' && offer.offeredItem && offer.requestedItem
+        );
+        
+        // Fetch received trade offers and include owner information for requestedItem
+        const receivedTradeOffers = await TradeOffer.find()
+            .populate('offeredItem')
+            .populate({
+                path: 'requestedItem',
+                match: { owner: userId }
+            }).exec();
+
+        // Filter out any null entries or null items in receivedTradeOffers and only include "Pending" offers
+        const filteredReceivedTradeOffers = receivedTradeOffers.filter(offer =>
+            offer.requestedItem && offer.status === 'Pending' && offer.offeredItem
+        );
+
+        // Fetch completed trade offers (both sent and received) and populate offeredItem and requestedItem fields
+        const completedTradeOffers = await TradeOffer.find({ status: 'Accepted' })
+            .populate('offeredItem')
+            .populate('requestedItem')
+            .exec();
+
+        // Filter to keep only trade offers where the current user is involved (either as offererUser or requestedItem owner)
+        const filteredCompletedTradeOffers = completedTradeOffers.filter(offer =>
+            offer.offererUser.equals(userId) || (offer.requestedItem && offer.requestedItem.owner.equals(userId))
+        );
+
+        // Debugging: Log the filteredCompletedTradeOffers array to the console
+        console.log('Filtered Completed Trade Offers:', filteredCompletedTradeOffers);
+
+        res.render('./user/profile', {
+            user, 
+            availableTrades, 
+            pendingTrades, 
+            sentTradeOffers: filteredSentTradeOffers, // Use the filtered array for sent trade offers
+            filteredReceivedTradeOffers,
+            completedTradeOffers: filteredCompletedTradeOffers // Use the filtered array when rendering the view
+        });
+    } catch (err) {
+        next(err);
+    }
 };
+
+
+
+
+
+
+
+
+
+
+
 
 
 exports.logout = (req, res, next) => {

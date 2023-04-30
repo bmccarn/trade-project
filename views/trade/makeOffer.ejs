@@ -17,12 +17,14 @@
                 </thead>
                 <tbody>
                     <% userTrades.forEach(trade => { %>
-                        <tr>
-                            <td><input type="radio" name="offeredTradeId" value="<%= trade.id %>" required></td>
-                            <td><%= trade.itemName %></td>
-                            <td><%= trade.category %></td>
-                            <td><%= trade.status %></td>
-                        </tr>
+                        <% if (trade.status === 'Available') { %> 
+                            <tr>
+                                <td><input type="radio" name="offeredTradeId" value="<%= trade.id %>" required></td>
+                                <td><%= trade.itemName %></td>
+                                <td><%= trade.category %></td>
+                                <td><%= trade.status %></td>
+                            </tr>
+                        <% } %>
                     <% }) %>
                 </tbody>
             </table>

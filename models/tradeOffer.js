@@ -7,8 +7,8 @@ const tradeOfferSchema = new Schema({
     offererUser: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     status: {
         type: String,
-        default: 'Available',
-        enum: ['Available', 'Pending', 'Accepted', 'Rejected', 'Withdrawn'],
+        default: 'Pending',
+        enum: ['Pending', 'Accepted'],
         required: true
     },
 },

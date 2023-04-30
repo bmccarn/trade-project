@@ -1,9 +1,9 @@
 <%- include('../partials/header.ejs')%>
 <main>
     <h2>Welcome, <%= user.firstName %>!</h2>
-    
-    <% if (trades.length) { %>
-        <h3>You have the following trades:</h3>
+
+    <% if (availableTrades.length) { %>
+        <h3>You have listed the following trades:</h3>
         <table class="trade-table">
             <thead>
                 <tr>
@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                <% trades.forEach(trade => { %>
+                <% availableTrades.forEach(trade => { %>
                     <tr>
                         <td><a href="/trades/<%= trade.id %>"><%= trade.itemName %></a></td>
                         <td><%= trade.category %></td>
@@ -31,12 +31,103 @@
                 <% }) %>
             </tbody>
         </table>
-    <% } else { %>
-        <div class="no-trades-container">
-            <h3>It looks like you haven't listed any trades yet.</h3>
-            <p>Ready to get started? List your first item for trade!</p>
-            <a href="/trades/new" class="btn-start-trading">Start Trading</a>
-        </div>
     <% } %>
-</main>
-<%- include('../partials/footer.ejs')%>
+
+    <% if (filteredReceivedTradeOffers.length) { %>
+        <h3>You have received the following trade offers:</h3>
+        <table class="trade-table">
+            <thead>
+                <tr>
+                    <th>Offered Item</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% filteredReceivedTradeOffers.forEach(offer => { %>
+                    <tr>
+                        <td><a href="/trades/<%= offer.offeredItem.id %>"><%= offer.offeredItem.itemName %></a></td>
+                        <td><%= offer.offeredItem.category %></td>
+                        <td><%= offer.status %></td>
+                        <td>
+                            <form class="form-buttons">
+                                <button type="submit" formmethod="post" formaction="/trades/trade-offers/<%= offer._id %>/accept">Accept</button>
+                                <button type="submit" formmethod="post" formaction="/trades/trade-offers/<%= offer._id %>/reject">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+
+    <% if (sentTradeOffers.length) { %>
+        <h3>You have sent the following trade offers:</h3>
+        <table class="trade-table">
+            <thead>
+                <tr>
+                    <th>Offered Item</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% sentTradeOffers.forEach(offer => { %>
+                    <tr>
+                        <td><a href="/trades/<%= offer.offeredItem.id %>"><%= offer.offeredItem.itemName %></a></td>
+                        <td><%= offer.offeredItem.category %></td>
+                        <td><%= offer.status %></td>
+                        <td>
+                            <form class="form-buttons">
+                                <button type="submit" formmethod="post" formaction="/trades/trade-offers/<%= offer._id %>/withdraw">Withdraw</button>
+
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                    </tbody>
+                    </table>
+                    <% } %>
+
+                    <% if (completedTradeOffers.length) { %>
+                        <h3>Completed Trades:</h3>
+                        <table class="trade-table">
+                            <thead>
+                                <tr>
+                                    <th>Sent Item</th>
+                                    <th>Received Item</th>
+                                    <th>Trade Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% completedTradeOffers.forEach(offer => { %>
+                                    <% if (offer.offererUser.equals(user._id)) { %>
+                                        <!-- Current user is the sender -->
+                                        <tr>
+                                            <td><%= offer.offeredItem.itemName %></td>
+                                            <td><%= offer.requestedItem.itemName %></td>
+                                            <td><%= offer.updatedAt.toLocaleDateString() %></td>
+                                        </tr>
+                                    <% } else { %>
+                                        <!-- Current user is the recipient -->
+                                        <tr>
+                                            <td><%= offer.requestedItem.itemName %></td>
+                                            <td><%= offer.offeredItem.itemName %></td>
+                                            <td><%= offer.updatedAt.toLocaleDateString() %></td>
+                                        </tr>
+                                    <% } %>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    <% } %>
+                    <% if (!availableTrades.length && !pendingTrades.length && !receivedTradeOffers.length && !sentTradeOffers.length) { %>
+                        <div class="no-trades-container">
+                            <h3>It looks like you haven't listed any trades yet.</h3>
+                            <p>Ready to get started? List your first item for trade!</p>
+                            <a href="/trades/new" class="btn-start-trading">Start Trading</a>
+                        </div>
+                    <% } %>
+                </main>
+                <%- include('../partials/footer.ejs')%>

@@ -1,4 +1,5 @@
 const model = require('../models/trade');
+const TradeOffer = require('../models/tradeOffer');
 
 //function to format the categories prior to adding to database
 function capitalizeFirstLetterOfEachWord(str) {
@@ -183,7 +184,7 @@ exports.submitOffer = async (req, res, next) => {
             return res.redirect('/trades/' + requestedTradeId + '/offer');
         }
 
-        // Update the status of both the requestedTrade and offeredTrade to "pending"
+        // Update the status of both the requestedTrade and offeredTrade to "Pending"
         requestedTrade.status = "Pending";
         offeredTrade.status = "Pending";
 
@@ -191,9 +192,119 @@ exports.submitOffer = async (req, res, next) => {
         await requestedTrade.save();
         await offeredTrade.save();
 
+        // Create a new trade offer and save it to the database
+        const tradeOffer = new TradeOffer({
+            offeredItem: offeredTradeId,
+            requestedItem: requestedTradeId,
+            offererUser: userId,
+            status: 'Pending'
+        });
+        await tradeOffer.save();
+
         // Redirect the user to the trade detail page and display a success message
         req.flash('success', 'Trade offer has been successfully submitted.');
-        res.redirect('/trades/' + requestedTradeId);
+        res.redirect('/users/profile');
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Controller function to withdraw an existing trade offer
+exports.withdrawOffer = async (req, res, next) => {
+    const tradeOfferId = req.params.id;
+    const userId = req.session.user;
+    try {
+        // Find the trade offer and populate offeredItem and requestedItem
+        const tradeOffer = await TradeOffer.findById(tradeOfferId)
+            .populate('offeredItem')
+            .populate('requestedItem');
+
+        // Validate that the current user is the offerer
+        if (tradeOffer.offererUser.toString() !== userId) {
+            req.flash('error', 'You are not authorized to withdraw this offer.');
+            return res.redirect('/trades');
+        }
+
+        // Update the status of the offeredItem and requestedItem to "Available"
+        tradeOffer.offeredItem.status = 'Available';
+        tradeOffer.requestedItem.status = 'Available';
+        await tradeOffer.offeredItem.save();
+        await tradeOffer.requestedItem.save();
+
+        // Delete the trade offer
+        await TradeOffer.findByIdAndDelete(tradeOfferId);
+
+        // Redirect the user to the profile page with success message
+        req.flash('success', 'Trade offer has been successfully withdrawn.');
+        res.redirect('/users/profile');
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Controller function to accept an existing trade offer
+exports.acceptOffer = async (req, res, next) => {
+    const tradeOfferId = req.params.id;
+    const userId = req.session.user;
+    try {
+        // Find the trade offer and populate offeredItem and requestedItem
+        const tradeOffer = await TradeOffer.findById(tradeOfferId)
+            .populate('offeredItem')
+            .populate('requestedItem');
+
+        // Validate that the current user is the owner of the requested item
+        if (tradeOffer.requestedItem.owner.toString() !== userId) {
+            req.flash('error', 'You are not authorized to accept this offer.');
+            return res.redirect('/trades');
+        }
+
+        // Update the status of the offeredItem and requestedItem to "Traded"
+        tradeOffer.offeredItem.status = 'Traded';
+        tradeOffer.requestedItem.status = 'Traded';
+        await tradeOffer.offeredItem.save();
+        await tradeOffer.requestedItem.save();
+
+        // Update the status of the tradeOffer to "Accepted" and save it
+        tradeOffer.status = 'Accepted';
+        await tradeOffer.save();
+
+        // Redirect the user to the profile page with success message
+        req.flash('success', 'Trade offer has been successfully accepted.');
+        res.redirect('/users/profile');
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+// Controller function to reject an existing trade offer
+exports.rejectOffer = async (req, res, next) => {
+    const tradeOfferId = req.params.id;
+    const userId = req.session.user;
+    try {
+        // Find the trade offer and populate offeredItem and requestedItem
+        const tradeOffer = await TradeOffer.findById(tradeOfferId)
+            .populate('offeredItem')
+            .populate('requestedItem');
+
+        // Validate that the current user is the owner of the requested item
+        if (tradeOffer.requestedItem.owner.toString() !== userId) {
+            req.flash('error', 'You are not authorized to reject this offer.');
+            return res.redirect('/trades');
+        }
+
+        // Update the status of the offeredItem and requestedItem to "Available"
+        tradeOffer.offeredItem.status = 'Available';
+        tradeOffer.requestedItem.status = 'Available';
+        await tradeOffer.offeredItem.save();
+        await tradeOffer.requestedItem.save();
+
+        // Delete the trade offer
+        await TradeOffer.findByIdAndDelete(tradeOfferId);
+
+        // Redirect the user to the profile page with success message
+        req.flash('success', 'Trade offer has been successfully rejected.');
+        res.redirect('/users/profile');
     } catch (err) {
         next(err);
     }

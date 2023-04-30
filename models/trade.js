@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const tradeSchema = new Schema({
     itemName: { type: String, required: [true, 'Item name is required'] },
-    owner: {type: Schema.Types.ObjectId, ref: 'User'},
+    owner: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     category: { type: String, required: [true, 'Category is required'] },
     details: {
         type: String, required: [true, 'Details are required'],
@@ -12,7 +12,7 @@ const tradeSchema = new Schema({
     status: {
         type: String,
         default: 'Available',
-        enum: ['Available', 'Pending'],
+        enum: ['Available', 'Pending', 'Traded'],
         required: true
     },
     image: { type: String, default: '/images/camera_placeholder.png' },

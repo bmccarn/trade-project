@@ -17,13 +17,14 @@
     </div>
     <% if (isOfferer) { %>
         <form class="form-buttons">
-            <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/withdraw">Withdraw Offer</button>
+          <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/withdraw">Withdraw Offer</button>
         </form>
-    <% } else if (isReceiver) { %>
+      <% } else if (isReceiver) { %>
         <form class="form-buttons">
-            <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/accept">Accept Offer</button>
-            <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/reject">Reject Offer</button>
+          <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/accept">Accept Offer</button>
+          <button type="submit" formmethod="post" formaction="/trade-offers/<%= tradeOffer._id %>/reject">Reject Offer</button>
         </form>
     <% } %>
+    
 </main>
 <%- include('../partials/footer.ejs') %>

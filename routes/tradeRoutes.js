@@ -34,4 +34,13 @@ router.post('/:id/make-offer', isLoggedIn, validateId, controller.makeOffer); //
 // POST /trades/:id/submit-offer: submit a new trade offer
 router.post('/:id/submit-offer', isLoggedIn, validateId, controller.submitOffer); // Ensure user is logged in
 
+// POST /trade-offers/:id/withdraw: withdraw an existing trade offer
+router.post('/trade-offers/:id/withdraw', isLoggedIn, validateId, controller.withdrawOffer); // Ensure user is logged in
+
+// POST /trade-offers/:id/accept: accept an existing trade offer
+router.post('/trade-offers/:id/accept', isLoggedIn, validateId, controller.acceptOffer); // Ensure user is logged in
+
+// POST /trade-offers/:id/reject: reject an existing trade offer
+router.post('/trade-offers/:id/reject', isLoggedIn, validateId, controller.rejectOffer); // Ensure user is logged in
+
 module.exports = router;
