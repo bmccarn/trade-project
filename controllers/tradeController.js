@@ -9,13 +9,23 @@ function capitalizeFirstLetterOfEachWord(str) {
     });
   }
 
-exports.index = (req, res, next) => {
-    model.find()
-        .then(trades => {
-            const categories = [...new Set(trades.map(trade => trade.category))];
-            res.render('./trade/index', { trades, categories });
-        })
-        .catch(err => next(err));
+  exports.index = async (req, res, next) => {
+    try {
+        const trades = await model.find();
+        // Filter categories that have at least one item available
+        const filteredCategories = trades
+            .filter(trade => trade.status === 'Available')
+            .map(trade => trade.category);
+        const uniqueCategories = [...new Set(filteredCategories)];
+        // Group available items by category
+        const itemsByCategory = uniqueCategories.map(category => ({
+            category,
+            items: trades.filter(trade => trade.category === category && trade.status === 'Available'),
+        }));
+        res.render('./trade/index', { itemsByCategory });
+    } catch (err) {
+        next(err);
+    }
 };
 
 exports.new = (req, res) => {

@@ -1,39 +1,26 @@
 <%- include('../partials/header.ejs')%>
-    <main>
-        <% if (trades.length > 0) { %>
-            <% categories.forEach(category=> { %>
-                <h1>
-                    <%= category %>
-                </h1>
-                <br>
-                <div class="row">
-                    <% let itemsInCategory = trades.filter(trade => trade.category === category && trade.status === 'Available'); %>
-                    <% if (itemsInCategory.length) { %>
-                        <% itemsInCategory.forEach(trade=> { %>
-                            <div class="column">
-                                <a href="/trades/<%= trade.id %>">
-                                    <div class="card">
-                                        <img src="<%= trade.image %>" alt="<%= trade.itemName %>">
-                                        <h3>
-                                            <%= trade.itemName %>
-                                        </h3>
-                                        <h4>
-                                            Status: <%= trade.status %>
-                                        </h4>
-                                        <p>
-                                            Click to view details
-                                        </p>
-                                    </div>
-                                </a>
+<main>
+    <% if (itemsByCategory.length > 0) { %>
+        <% itemsByCategory.forEach(({ category, items }) => { %>
+            <h1><%= category %></h1>
+            <br>
+            <div class="row">
+                <% items.forEach(trade => { %>
+                    <div class="column">
+                        <a href="/trades/<%= trade.id %>">
+                            <div class="card">
+                                <img src="<%= trade.image %>" alt="<%= trade.itemName %>">
+                                <h3><%= trade.itemName %></h3>
+                                <h4>Status: <%= trade.status %></h4>
+                                <p>Click to view details</p>
                             </div>
-                        <% }); %>
-                    <% } else { %>
-                        <h2>There are no <%= category.toLowerCase() %> items to display.</h2>
-                    <% } %>
-                </div>
-            <% }); %>
-        <% } else { %>
-            <h2>Looks like there's nothing to trade right now! Come back later to see what's available.</h2>
-        <% } %>
-    </main>
+                        </a>
+                    </div>
+                <% }); %>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <h2>Looks like there's nothing to trade right now! Come back later to see what's available.</h2>
+    <% } %>
+</main>
 <%- include('../partials/footer.ejs')%>
