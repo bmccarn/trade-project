@@ -5,48 +5,49 @@ const { validateId, validateTrade } = require('../middlewares/validator');
 
 const router = express.Router();
 
-// GET request to /trades: send all trades to the user
+// Get all trades
 router.get('/', controller.index);
 
-// GET /trades/new: send the form to the user
-router.get('/new', isLoggedIn, controller.new); // Ensure user is logged in
+// Render form to create a new trade (only for logged-in users)
+router.get('/new', isLoggedIn, controller.new);
 
-// POST /trades: create a new trade
-router.post('/', isLoggedIn, validateTrade, controller.create); // Ensure user is logged in
+// Create a new trade (only for logged-in users)
+router.post('/', isLoggedIn, validateTrade, controller.create);
 
-// GET /trades/:id: send details of trade identified by id
+// Get trade details by ID
 router.get('/:id', validateId, controller.show);
 
-// GET /trades/:id/edit: send html form for editing an existing trade
-router.get('/:id/edit', validateId, isLoggedIn, isOwner, controller.edit); // Ensure user is logged in and is owner
+// Render form to edit trade (only for trade owner)
+router.get('/:id/edit', validateId, isLoggedIn, isOwner, controller.edit);
 
-// PUT /trades/:id: update the trade identified by id
-router.put('/:id', validateId, isLoggedIn, isOwner, validateTrade, controller.update); // Ensure user is logged in and is owner
+// Update trade by ID (only for trade owner)
+router.put('/:id', validateId, isLoggedIn, isOwner, validateTrade, controller.update);
 
-// DELETE /trades/:id: delete the trade identified by id
-router.delete('/:id', validateId, isLoggedIn, isOwner, controller.delete); // Ensure user is logged in and is owner
+// Delete trade by ID (only for trade owner)
+router.delete('/:id', validateId, isLoggedIn, isOwner, controller.delete);
 
+// Render form to make a trade offer (only for logged-in users)
 router.get('/:id/offer', isLoggedIn, validateId, controller.makeOffer);
 
-// POST /trades/:tradeId/make-offer: create a new trade offer
-router.post('/:id/make-offer', isLoggedIn, validateId, controller.makeOffer); // Ensure user is logged in
+// Create a trade offer (only for logged-in users)
+router.post('/:id/make-offer', isLoggedIn, validateId, controller.makeOffer);
 
-// POST /trades/:id/submit-offer: submit a new trade offer
-router.post('/:id/submit-offer', isLoggedIn, validateId, controller.submitOffer); // Ensure user is logged in
+// Submit a trade offer (only for logged-in users)
+router.post('/:id/submit-offer', isLoggedIn, validateId, controller.submitOffer);
 
-// POST /trade-offers/:id/withdraw: withdraw an existing trade offer
-router.post('/trade-offers/:id/withdraw', isLoggedIn, validateId, controller.withdrawOffer); // Ensure user is logged in
+// Withdraw a trade offer (only for offerer)
+router.post('/trade-offers/:id/withdraw', isLoggedIn, validateId, controller.withdrawOffer);
 
-// POST /trade-offers/:id/accept: accept an existing trade offer
-router.post('/trade-offers/:id/accept', isLoggedIn, validateId, controller.acceptOffer); // Ensure user is logged in
+// Accept a trade offer (only for recipient)
+router.post('/trade-offers/:id/accept', isLoggedIn, validateId, controller.acceptOffer);
 
-// POST /trade-offers/:id/reject: reject an existing trade offer
-router.post('/trade-offers/:id/reject', isLoggedIn, validateId, controller.rejectOffer); // Ensure user is logged in
+// Reject a trade offer (only for recipient)
+router.post('/trade-offers/:id/reject', isLoggedIn, validateId, controller.rejectOffer);
 
-// Route to add an item to the watchlist
+// Add an item to watchlist (only for logged-in users)
 router.post('/:id/watch', isLoggedIn, validateId, controller.addToWatchlist);
 
-// Route to remove an item from the watchlist
+// Remove an item from watchlist (only for logged-in users)
 router.delete('/:id/watch', isLoggedIn, validateId, controller.removeFromWatchlist);
 
 module.exports = router;

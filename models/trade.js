@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Define the schema for a trade
 const tradeSchema = new Schema({
     itemName: { type: String, required: [true, 'Item name is required'] },
-    owner: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     category: { type: String, required: [true, 'Category is required'] },
     details: {
         type: String, required: [true, 'Details are required'],
@@ -17,6 +18,7 @@ const tradeSchema = new Schema({
     },
     image: { type: String, default: '/images/camera_placeholder.png' },
 },
-    { timestamps: true });
+    { timestamps: true }); // Automatically track creation and update timestamps
 
-    module.exports = mongoose.model('Trade', tradeSchema);
+// Export the trade model based on the schema
+module.exports = mongoose.model('Trade', tradeSchema);

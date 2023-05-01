@@ -3,20 +3,16 @@ const controller = require('../controllers/mainController');
 
 const router = express.Router();
 
-//GET request to /: send the home page to the user
-
+// Render home page
 router.get('/', controller.index);
 
-//GET request to /contact: send the contact page to the user
-
+// Render contact page
 router.get('/contact', controller.contact);
 
-//POST request to /contact: send the contact page to the user (used for contact form submission)
-
+// Handle contact form submission
 router.post('/contact', controller.contact);
 
-//GET request to /about: send the about page to the user
-
+// Render about page
 router.get('/about', controller.about);
 
 module.exports = router;

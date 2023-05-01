@@ -2,22 +2,21 @@ const model = require('../models/trade');
 const TradeOffer = require('../models/tradeOffer');
 const User = require('../models/user');
 
-//function to format the categories prior to adding to database
+// Helper function to capitalize first letter of each word
 function capitalizeFirstLetterOfEachWord(str) {
     return str.replace(/\w\S*/g, function (word) {
       return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
     });
   }
 
+  // Render trades page with items grouped by category
   exports.index = async (req, res, next) => {
     try {
         const trades = await model.find();
-        // Filter categories that have at least one item available
         const filteredCategories = trades
             .filter(trade => trade.status === 'Available')
             .map(trade => trade.category);
         const uniqueCategories = [...new Set(filteredCategories)];
-        // Group available items by category
         const itemsByCategory = uniqueCategories.map(category => ({
             category,
             items: trades.filter(trade => trade.category === category && trade.status === 'Available'),
@@ -28,10 +27,12 @@ function capitalizeFirstLetterOfEachWord(str) {
     }
 };
 
+// Render form to create new trade
 exports.new = (req, res) => {
     res.render('./trade/new');
 };
 
+// Create new trade
 exports.create = (req, res, next) => {
     let trade = new model(req.body);
     trade.category = capitalizeFirstLetterOfEachWord(trade.category);
@@ -52,22 +53,23 @@ exports.create = (req, res, next) => {
     });
 };
 
+// Render trade details
 exports.show = (req, res, next) => {
     let id = req.params.id;
-    let userId = req.session.user; // Get the current user ID from the session
+    let userId = req.session.user; 
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
         let err = new Error('Invalid trade ID');
         err.status = 400;
         return next(err);
     }
     model.findById(id)
-        .then(async trade => { // Mark the function as async
+        .then(async trade => { 
             if (trade) {
-                let user = null; // Initialize user as null
-                if (userId) { // If user is logged in, find the user
+                let user = null; 
+                if (userId) { 
                     user = await User.findById(userId);
                 }
-                res.render('./trade/show', { trade, user }); // Pass the user object to the view
+                res.render('./trade/show', { trade, user }); 
             } else {
                 let err = new Error('Cannot find a trade with ID ' + id);
                 err.status = 404;
@@ -77,6 +79,7 @@ exports.show = (req, res, next) => {
         .catch(err => next(err));
 };
 
+// Render form to edit trade
 exports.edit = (req, res, next) => {
     let id = req.params.id;
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -97,6 +100,7 @@ exports.edit = (req, res, next) => {
         .catch(err => next(err));
 };
 
+// Update trade
 exports.update = (req, res, next) => {
     let trade = req.body;
     let id = req.params.id;
@@ -130,6 +134,7 @@ exports.update = (req, res, next) => {
         });
 };
 
+// Delete trade and associated offers
 exports.delete = async (req, res, next) => {
     let id = req.params.id;
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -139,24 +144,17 @@ exports.delete = async (req, res, next) => {
     }
 
     try {
-        // Find trade offers where the item being deleted is either the offeredItem or requestedItem
         const tradeOffers = await TradeOffer.find({
             $or: [{ offeredItem: id }, { requestedItem: id }],
-            status: 'Pending' // Only consider pending trade offers
+            status: 'Pending'
         });
 
-        // Delete each trade offer and set the status of the other person's item back to "Available"
         for (const offer of tradeOffers) {
-            // Identify the other person's item
             const otherItemId = offer.offeredItem.equals(id) ? offer.requestedItem : offer.offeredItem;
-            // Set the status of the other person's item back to "Available"
             await model.findByIdAndUpdate(otherItemId, { status: 'Available' });
-
-            // Delete the trade offer
             await TradeOffer.findByIdAndDelete(offer._id);
         }
 
-        // Delete the item from the trades collection
         const trade = await model.findByIdAndDelete(id, { useFindAndModify: false });
 
         if (trade) {
@@ -172,46 +170,37 @@ exports.delete = async (req, res, next) => {
     }
 };
 
-
-// Offer/Watchlist functions
-
+// Render make offer form
 exports.makeOffer = async (req, res, next) => {
     let requestedTradeId = req.params.id;
     let userId = req.session.user;
 
     try {
-        // Find the requested trade
         const requestedTrade = await model.findById(requestedTradeId);
-
-        // Check if the current user is the owner of the requested trade
         if (requestedTrade.owner.toString() === userId) {
             req.flash('error', 'You cannot make an offer to trade with yourself.');
             return res.redirect('/trades/' + requestedTradeId);
         }
 
-        // Find any existing trade offers made by the user for the requested trade
         const existingOffer = await TradeOffer.findOne({
             offeredItem: { $ne: requestedTradeId },
             requestedItem: requestedTradeId, 
             offererUser: userId 
         });
 
-        // If an existing offer is found, display a message and redirect
         if (existingOffer) {
             req.flash('error', 'You have already made an offer for this item.');
             return res.redirect('/trades/' + requestedTradeId);
         }
 
-        // Find all trades posted by the current user
         const userTrades = await model.find({ owner: userId, _id: { $ne: requestedTradeId } });
-
-        // Render the makeOffer.ejs view with the requested trade and the user's trades
         res.render('./trade/makeOffer', { requestedTrade, userTrades });
     } catch (err) {
         next(err);
     }
 };
 
+// Submit trade offer
 exports.submitOffer = async (req, res, next) => {
     let requestedTradeId = req.params.id;
     let offeredTradeId = req.body.offeredTradeId; 
@@ -362,8 +351,8 @@ exports.rejectOffer = async (req, res, next) => {
 
 // Controller function to add an item to the user's watchlist
 exports.addToWatchlist = async (req, res, next) => {
-    const tradeId = req.params.id; // The ID of the trade item to add to the watchlist
-    const userId = req.session.user; // The ID of the current user
+    const tradeId = req.params.id; 
+    const userId = req.session.user;
 
     try {
         // Find the trade item

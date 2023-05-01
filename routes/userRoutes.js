@@ -6,24 +6,22 @@ const { logInLimiter } = require('../middlewares/rateLimiters');
 
 const router = express.Router();
 
-//GET /users/new: send html form for creating a new user account
-
+// Render registration form
 router.get('/new', isGuest, controller.new);
 
-//POST /users: create a new user account
-
+// Handle user registration
 router.post('/', isGuest, validateSignup, validateResult, controller.create);
 
-//GET /users/login: send html for logging in
+// Render login form
 router.get('/login', isGuest, controller.getUserLogin);
 
-//POST /users/login: authenticate user's login
+// Authenticate user login
 router.post('/login', logInLimiter, isGuest, validateLogin, validateResult, controller.login);
 
-//GET /users/profile: send user's profile page
+// Render user profile
 router.get('/profile', isLoggedIn, controller.profile);
 
-//POST /users/logout: logout a user
+// Log out user
 router.get('/logout', isLoggedIn, controller.logout);
 
 module.exports = router;
