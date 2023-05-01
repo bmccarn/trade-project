@@ -67,8 +67,8 @@
             <thead>
                 <tr>
                     <th>Offered Item</th>
-                    <th>Category</th>
-                    <th>Status</th>
+                    <th>Requested Item</th>
+                    <th>Offer Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -76,8 +76,8 @@
                 <% filteredReceivedTradeOffers.forEach(offer => { %>
                     <tr>
                         <td><a href="/trades/<%= offer.offeredItem.id %>"><%= offer.offeredItem.itemName %></a></td>
-                        <td><%= offer.offeredItem.category %></td>
-                        <td><%= offer.status %></td>
+                        <td><a href="/trades/<%= offer.requestedItem.id %>"><%= offer.requestedItem.itemName %></a></td>
+                        <td><%= offer.createdAt.toLocaleDateString() %></td>
                         <td>
                             <form class="form-buttons">
                                 <button type="submit" formmethod="post" formaction="/trades/trade-offers/<%= offer._id %>/accept">Accept</button>
@@ -96,8 +96,8 @@
             <thead>
                 <tr>
                     <th>Offered Item</th>
-                    <th>Category</th>
-                    <th>Status</th>
+                    <th>Requested Item</th>
+                    <th>Offer Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -105,19 +105,18 @@
                 <% sentTradeOffers.forEach(offer => { %>
                     <tr>
                         <td><a href="/trades/<%= offer.offeredItem.id %>"><%= offer.offeredItem.itemName %></a></td>
-                        <td><%= offer.offeredItem.category %></td>
-                        <td><%= offer.status %></td>
+                        <td><a href="/trades/<%= offer.requestedItem.id %>"><%= offer.requestedItem.itemName %></a></td>
+                        <td><%= offer.createdAt.toLocaleDateString() %></td>
                         <td>
                             <form class="form-buttons">
                                 <button type="submit" formmethod="post" formaction="/trades/trade-offers/<%= offer._id %>/withdraw">Withdraw</button>
-
                             </form>
                         </td>
                     </tr>
-                    <% }) %>
-                    </tbody>
-                    </table>
-                    <% } %>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
 
                     <% if (completedTradeOffers.length) { %>
                         <h3>Completed Trades:</h3>

@@ -63,7 +63,10 @@ exports.show = (req, res, next) => {
     model.findById(id)
         .then(async trade => { // Mark the function as async
             if (trade) {
-                const user = await User.findById(userId); // Find the current user
+                let user = null; // Initialize user as null
+                if (userId) { // If user is logged in, find the user
+                    user = await User.findById(userId);
+                }
                 res.render('./trade/show', { trade, user }); // Pass the user object to the view
             } else {
                 let err = new Error('Cannot find a trade with ID ' + id);
