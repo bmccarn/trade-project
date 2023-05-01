@@ -189,6 +189,19 @@ exports.makeOffer = async (req, res, next) => {
             return res.redirect('/trades/' + requestedTradeId);
         }
 
+        // Find any existing trade offers made by the user for the requested trade
+        const existingOffer = await TradeOffer.findOne({
+            offeredItem: { $ne: requestedTradeId },
+            requestedItem: requestedTradeId, 
+            offererUser: userId 
+        });
+
+        // If an existing offer is found, display a message and redirect
+        if (existingOffer) {
+            req.flash('error', 'You have already made an offer for this item.');
+            return res.redirect('/trades/' + requestedTradeId);
+        }
+
         // Find all trades posted by the current user
         const userTrades = await model.find({ owner: userId, _id: { $ne: requestedTradeId } });
 
@@ -201,7 +214,7 @@ exports.makeOffer = async (req, res, next) => {
 
 exports.submitOffer = async (req, res, next) => {
     let requestedTradeId = req.params.id;
-    let offeredTradeId = req.body.offeredTradeId; // Extract the offeredTradeId from the form data
+    let offeredTradeId = req.body.offeredTradeId; 
     let userId = req.session.user;
 
     try {
@@ -380,8 +393,8 @@ exports.addToWatchlist = async (req, res, next) => {
 
 // Controller function to remove an item from the user's watchlist
 exports.removeFromWatchlist = async (req, res, next) => {
-    const tradeId = req.params.id; // The ID of the trade item to remove from the watchlist
-    const userId = req.session.user; // The ID of the current user
+    const tradeId = req.params.id; 
+    const userId = req.session.user; 
 
     try {
         // Find the current user and update their watchlist
