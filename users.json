@@ -1,19 +1,21 @@
 [{
   "_id": {
-    "$oid": "6445b08cdaab353ba9fb986f"
+    "$oid": "6452b289da20136df6535a64"
   },
   "firstName": "John",
   "lastName": "Doe",
   "email": "john.doe@example.com",
-  "password": "$2b$10$LovSWUsY0SwiiKaFLxBJ6u3ssrivw36yz1Zw1hj4gx6zQDKK.G2d.",
+  "password": "$2b$10$hKh20hFLgZVf5KEPc2jyJOccNZr9VM4qJjILpgtGW1NmDz9mOdAra",
+  "watchlist": [],
   "__v": 0
 },{
   "_id": {
-    "$oid": "6445b0a7daab353ba9fb9871"
+    "$oid": "6452b3ddda20136df6535a7d"
   },
   "firstName": "Emily",
   "lastName": "Smith",
   "email": "emily.smith@example.com",
-  "password": "$2b$10$YNHgqdDlnl3g1qhJS/FcGe35S1IplwpoiXErA1mP3aYiOTlfIVDaq",
+  "password": "$2b$10$RA.WiBXuKz/NzyMkqzY3Xerw4FK4VIMlmfoO3v0yva2KrEvdBxccO",
+  "watchlist": [],
   "__v": 0
 }]
